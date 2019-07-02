@@ -1,0 +1,11 @@
+version: '3'
+
+services:
+
+  create-clients:
+    build: .
+    volumes:
+      - ./hydra-clients.json:/hydra-clients.json
+      - ./output:/output
+    restart: on-failure
+    command: "cat /hydra-clients.json | /create_hydra_clients.sh > /output/result.txt"

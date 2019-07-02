@@ -1,0 +1,51 @@
+[
+  {
+    "client_id" : "cp-fe",
+    "client_name" : "consent-provider-frontend",
+    "scopes" : ["cpbe.authorize", "openid"],
+    "grant_types" : ["client_credentials"],
+    "audience" : ["cpbe"],
+    "response_types" : ["token", "code"],
+    "redirect_uris" : [],
+    "update_if_found" : true,
+    "hydra_host" : "https://hydra:4445/clients",
+    "output_name" : "cp-fe",
+    "verbose": true
+  },{
+    "client_id" : "cp-be",
+    "client_name" : "consent-provider-backend",
+    "scopes" : ["hydra"],
+    "grant_types" : ["client_credentials"],
+    "audience" : ["hydra"],
+    "response_types" : ["token"],
+    "redirect_uris" : [],
+    "update_if_found" : true,
+    "hydra_host" : "https://hydra:4445/clients",
+    "output_name" : "cp-be",
+    "verbose": true
+  },{
+    "client_id" : "idp-fe",
+    "client_name" : "identity-provider-frontend",
+    "scopes" : ["idpbe.authenticate", "openid"],
+    "grant_types" : ["authorization_code", "client_credentials"],
+    "audience" : ["idpbe"],
+    "response_types" : ["token", "code"],
+    "redirect_uris" : ["https:/dev-larn.fullrate.dk:8081/callback"],
+    "update_if_found" : true,
+    "hydra_host" : "https://hydra:4445/clients",
+    "output_name" : "idp-fe",
+    "verbose": true
+  },{
+    "client_id" : "idp-be",
+    "client_name" : "identity-provider-backend",
+    "scopes" : ["hydra"],
+    "grant_types" : ["client_credentials"],
+    "audience" : ["hydra"],
+    "response_types" : ["token"],
+    "redirect_uris" : [],
+    "update_if_found" : true,
+    "hydra_host" : "https://hydra:4445/clients",
+    "output_name" : "idp-be",
+    "verbose": true
+  }
+]
