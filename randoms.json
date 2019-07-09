@@ -3,7 +3,8 @@
     "output_dir": "env/secrets",
     "output_file" : "cpfe.env",
     "output_lines" : [
-      {"line": "CP_FRONTEND_CSRF_AUTH_KEY=", "value": ""}
+      {"line": "CP_FRONTEND_CSRF_AUTH_KEY=", "value": ""},
+      {"line": "IDP_FRONTEND_SESSION_AUTH_KEY=", "value": ""}
     ],
     "verbose": true
   },{
@@ -17,7 +18,8 @@
     "output_dir": "env/secrets",
     "output_file" : "idpfe.env",
     "output_lines" : [
-      {"line": "IDP_FRONTEND_CSRF_AUTH_KEY=", "value": ""}
+      {"line": "IDP_FRONTEND_CSRF_AUTH_KEY=", "value": ""},
+      {"line": "IDP_FRONTEND_SESSION_AUTH_KEY=", "value": ""}
     ],
     "verbose": true
   },{
