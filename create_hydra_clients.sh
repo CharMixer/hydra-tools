@@ -141,7 +141,6 @@ for row in $(printf "$INPUT" | jq -c '.[]'); do
     LINE=$(_jq "$line" '.line')
     VALUE_FIELD=$(_jq "$line" '.value')
     VALUE=$(jq -r $VALUE_FIELD <<< "$RESPONSE")
-    printf $VALUE >&2
     PRINT_LINE="$LINE$VALUE"
 
     echo "$PRINT_LINE" >> $OUTDIR/$OUTPUT_DIR/$OUTPUT_FILE
