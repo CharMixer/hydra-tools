@@ -7,9 +7,14 @@
     "audience" : ["cpbe"],
     "response_types" : ["token", "code"],
     "redirect_uris" : [],
-    "update_if_found" : true,
-    "hydra_host" : "https://hydra:4445/clients",
-    "output_name" : "cp-fe",
+    "update_if_exists" : true,
+    "hydra_host" : "https://hydra:4445",
+    "output_dir": "env/secrets",
+    "output_file" : "cpfe.env",
+    "output_lines" : [
+      {"line": "CP_FRONTEND_OAUTH2_CLIENT_ID=", "value": ".client_id"},
+      {"line": "CP_FRONTEND_OAUTH2_CLIENT_SECRET=", "value": ".client_secret"}
+    ],
     "verbose": true
   },{
     "client_id" : "cp-be",
@@ -19,9 +24,14 @@
     "audience" : ["hydra"],
     "response_types" : ["token"],
     "redirect_uris" : [],
-    "update_if_found" : true,
-    "hydra_host" : "https://hydra:4445/clients",
-    "output_name" : "cp-be",
+    "update_if_exists" : true,
+    "hydra_host" : "https://hydra:4445",
+    "output_dir": "env/secrets",
+    "output_file" : "cpbe.env",
+    "output_lines" : [
+      {"line": "CP_BACKEND_OAUTH2_CLIENT_ID=", "value": ".client_id"},
+      {"line": "CP_BACKEND_OAUTH2_CLIENT_SECRET=", "value": ".client_secret"}
+    ],
     "verbose": true
   },{
     "client_id" : "idp-fe",
@@ -30,10 +40,15 @@
     "grant_types" : ["authorization_code", "client_credentials"],
     "audience" : ["idpbe"],
     "response_types" : ["token", "code"],
-    "redirect_uris" : ["https:/dev-larn.fullrate.dk:8081/callback"],
-    "update_if_found" : true,
-    "hydra_host" : "https://hydra:4445/clients",
-    "output_name" : "idp-fe",
+    "redirect_uris" : ["https:/localhost/callback"],
+    "update_if_exists" : true,
+    "hydra_host" : "https://hydra:4445",
+    "output_dir": "env/secrets",
+    "output_file" : "idpfs.env",
+    "output_lines" : [
+      {"line": "IDP_FRONTEND_OAUTH2_CLIENT_ID=", "value": ".client_id"},
+      {"line": "IDP_FRONTEND_OAUTH2_CLIENT_SECRET=", "value": ".client_secret"}
+    ],
     "verbose": true
   },{
     "client_id" : "idp-be",
@@ -43,9 +58,14 @@
     "audience" : ["hydra"],
     "response_types" : ["token"],
     "redirect_uris" : [],
-    "update_if_found" : true,
-    "hydra_host" : "https://hydra:4445/clients",
-    "output_name" : "idp-be",
+    "update_if_exists" : true,
+    "hydra_host" : "https://hydra:4445",
+    "output_dir": "env/secrets",
+    "output_file" : "idpbe.env",
+    "output_lines" : [
+      {"line": "IDP_BACKEND_OAUTH2_CLIENT_ID=", "value": ".client_id"},
+      {"line": "IDP_BACKEND_OAUTH2_CLIENT_SECRET=", "value": ".client_secret"}
+    ],
     "verbose": true
   }
 ]

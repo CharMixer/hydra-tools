@@ -2,9 +2,9 @@
 
 INPUT=$(cat -)
 
-OUTPUT_DIR="./output"
+OUTDIR="/output"
 
-mkdir -p $OUTPUT_DIR
+mkdir -p $OUTDIR
 
 for row in $(printf "$INPUT" | jq -c '.[]'); do
   _jq() {
@@ -22,6 +22,12 @@ for row in $(printf "$INPUT" | jq -c '.[]'); do
   RESPONSE_TYPES=$(_jq "$row" '.response_types')
   UPDATE=$(_jq "$row" '.update_if_exists')
   VERBOSE=$(_jq "$row" '.verbose')
+  OUTPUT_DIR=$(_jq "$row" '.output_dir')
+  OUTPUT_FILE=$(_jq "$row" '.output_file')
+  OUTPUT_LINES=$(_jq "$row" '.output_lines')
+  CLIENT_SECRET=$(< /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c32)
+
+  mkdir -p $OUTDIR/$OUTPUT_DIR
 
   SCOPES_JSON=""
   for value in $(_jq "$SCOPES" '.[]'); do
@@ -95,11 +101,12 @@ for row in $(printf "$INPUT" | jq -c '.[]'); do
     printf "\n\nRequest logging started\n" >&2
   fi
 
+  RESPONSE=""
   if [ "$RETURN_CODE" = "200" ]; then
 
     if [ "$UPDATE" != true ]; then
       printf "Client already exists with ID $CLIENT_ID and update_if_exists not true\n" >&2
-      exit 0
+      continue
     fi
 
     URL=$HYDRA_CLIENTS_URL/$CLIENT_ID
@@ -130,6 +137,14 @@ for row in $(printf "$INPUT" | jq -c '.[]'); do
     printf "Request logging ended\n\n" >&2
   fi
 
-  echo -n $CLIENT_SECRET
+  for line in $(printf "$row" | jq -c '.output_lines[]'); do
+    LINE=$(_jq "$line" '.line')
+    VALUE_FIELD=$(_jq "$line" '.value')
+    VALUE=$(jq -r $VALUE_FIELD <<< "$RESPONSE")
+    printf $VALUE >&2
+    PRINT_LINE="$LINE$VALUE"
+
+    echo "$PRINT_LINE" >> $OUTDIR/$OUTPUT_DIR/$OUTPUT_FILE
+  done
 
 done

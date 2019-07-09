@@ -1,4 +1,4 @@
-version: '3'
+version: '3.7'
 
 services:
 
@@ -6,6 +6,14 @@ services:
     build: .
     volumes:
       - ./hydra-clients.json:/hydra-clients.json
+      - ./randoms.json:/randoms.json
       - ./output:/output
     restart: on-failure
-    command: "cat /hydra-clients.json | /create_hydra_clients.sh > /output/result.txt"
+    command: |-
+      bash -c "rm -r /output/* && cat /hydra-clients.json | /create_hydra_clients.sh && cat /randoms.json | /random.sh"
+    networks:
+      - trusted
+
+networks:
+  trusted:
+    name: "trusted"

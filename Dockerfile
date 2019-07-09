@@ -8,5 +8,7 @@ RUN apk add --update --no-cache bash curl jq
 WORKDIR /
 
 COPY ./create_hydra_clients.sh .
+COPY ./random.sh .
 
 RUN chmod +x ./create_hydra_clients.sh
+RUN chmod +x ./random.sh
