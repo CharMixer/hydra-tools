@@ -8,6 +8,7 @@ import (
   "encoding/json"
   "io/ioutil"
   "net/http"
+  "crypto/tls"
 )
 
 // input configuration - /in.yml
@@ -57,10 +58,13 @@ func loadOauth2ClientConfig() Oauth2Clients{
 }
 
 func createClients() {
+
+  http.DefaultTransport.(*http.Transport).TLSClientConfig = &tls.Config{InsecureSkipVerify: true}
+
   oauth2Clients := loadOauth2ClientConfig()
 
   fmt.Println("Starting the application...")
-  response, err := http.Get("https://httpbin.org/ip")
+  response, err := http.Get(oauth2Clients.Clients[0].HydraHost + "/clients/" + oauth2Clients.Clients[0].Id)
   if err != nil {
       fmt.Printf("The HTTP request failed with error %s\n", err)
   } else {
