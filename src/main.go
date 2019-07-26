@@ -71,6 +71,7 @@ func writeSecretsToFile(hydraClient HydraClient, outputFile string){
   // should come from config file somehow
   viper.Set("oauth2.client.secret", hydraClient.Secret)
   viper.Set("csrf.authKey", randStringBytesMask(64))
+  viper.Set("session.authKey", randStringBytesMask(64))
 
   viper.WriteConfig()
 
