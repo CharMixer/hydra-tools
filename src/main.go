@@ -103,9 +103,14 @@ func createSecrets() {
       responseData, _ := ioutil.ReadAll(response.Body)
       json.Unmarshal(responseData, &responseClient)
 
+      writeSecretsToFile(responseClient, row.ConfigFile)
+
       fmt.Println(string(responseData))
     } else if responseGet.StatusCode == 200 {
       // client found, we should update it
+
+      row.Client.Secret = randStringBytesMask(64)
+
       jsonPayload, _ := json.Marshal(row.Client)
 
       request, _ := http.NewRequest("PUT", row.HydraHost + "/clients/" + row.Client.Id , bytes.NewBuffer(jsonPayload))
