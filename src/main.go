@@ -97,7 +97,7 @@ func createSecrets() {
       // client not found, so we should create it
       jsonPayload, _ := json.Marshal(row.Client)
 
-      if row.Client.Secret == "" {
+      if row.Client.Secret == "" || row.Client.Secret == nil {
         row.Client.Secret = randStringBytesMask(64)
       }
 
