@@ -5,6 +5,7 @@ import (
   "github.com/spf13/viper"
   "strings"
   "bytes"
+  "base64"
   "encoding/json"
   "io/ioutil"
   "net/http"
