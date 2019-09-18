@@ -95,11 +95,12 @@ func createSecrets() {
       fmt.Printf("The HTTP request failed with error %s\n", err)
     } else if responseGet.StatusCode == 404 {
       // client not found, so we should create it
-      jsonPayload, _ := json.Marshal(row.Client)
 
-      if row.Client.Secret == "" || row.Client.Secret == nil {
+      if row.Client.Secret == "" {
         row.Client.Secret = randStringBytesMask(64)
       }
+
+      jsonPayload, _ := json.Marshal(row.Client)
 
       request, _ := http.NewRequest("POST", row.HydraHost + "/clients", bytes.NewBuffer(jsonPayload))
 
