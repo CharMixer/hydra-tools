@@ -32,6 +32,7 @@ type Oauth2Clients struct {
   Rows []struct {
     Client HydraClient
     UpdateIfExists bool
+    KeepSecrets bool
     HydraHost string
     ConfigFile string
   }
@@ -88,7 +89,6 @@ func createSecrets() {
   var responseClient HydraClient
 
   for _, row := range oauth2Clients.Rows {
-    row.Client.Secret = randStringBytesMask(64)
 
     responseGet, err := http.Get(row.HydraHost + "/clients/" + row.Client.Id)
     if err != nil {
@@ -96,6 +96,10 @@ func createSecrets() {
     } else if responseGet.StatusCode == 404 {
       // client not found, so we should create it
       jsonPayload, _ := json.Marshal(row.Client)
+
+      if row.Client.Secret == "" {
+        row.Client.Secret = randStringBytesMask(64)
+      }
 
       request, _ := http.NewRequest("POST", row.HydraHost + "/clients", bytes.NewBuffer(jsonPayload))
 
@@ -109,7 +113,9 @@ func createSecrets() {
     } else if responseGet.StatusCode == 200 {
       // client found, we should update it
 
-      row.Client.Secret = randStringBytesMask(64)
+      if !row.KeepSecrets {
+        row.Client.Secret = randStringBytesMask(64)
+      }
 
       jsonPayload, _ := json.Marshal(row.Client)
 
@@ -119,7 +125,9 @@ func createSecrets() {
       responseData, _ := ioutil.ReadAll(response.Body)
       json.Unmarshal(responseData, &responseClient)
 
-      writeSecretsToFile(responseClient, row.ConfigFile)
+      if !row.KeepSecrets {
+        writeSecretsToFile(responseClient, row.ConfigFile)
+      }
 
       fmt.Println(string(responseData))
     } else {
