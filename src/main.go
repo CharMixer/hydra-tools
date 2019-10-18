@@ -27,6 +27,7 @@ type HydraClient struct {
   Audience []string `json:"audience"`
   ResponseTypes []string `json:"response_types"`
   RedirectUris []string `json:"redirect_uris"`
+  TokenEndpointAuthMethod string `json:"token_endpoint_auth_method"`
 }
 
 type Oauth2Clients struct {
