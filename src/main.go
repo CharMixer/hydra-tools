@@ -28,7 +28,7 @@ type HydraClient struct {
   ResponseTypes []string `json:"response_types"`
   RedirectUris []string `json:"redirect_uris"`
   TokenEndpointAuthMethod string `json:"token_endpoint_auth_method"`
-  PostLogoutRedirectUris string `json:"post_logout_redirect_uris"`
+  PostLogoutRedirectUris []string `json:"post_logout_redirect_uris"`
 }
 
 type Oauth2Clients struct {
